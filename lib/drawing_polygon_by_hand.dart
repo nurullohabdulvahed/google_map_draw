@@ -159,6 +159,8 @@ class _DrawHandPageState extends State<DrawHandPage> {
     }
   }
 
+
+  //changed
   _clearPolygons() {
     setState(() {
       _polyLines.clear();
