@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:google_map_training/drawing_polygon_by_hand.dart';
+import 'package:google_map_training/page/open_street_map.dart';
+import 'package:google_map_training/page/street_map.dart';
+
 
 void main() {
   runApp(const MyApp());
@@ -15,7 +17,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: const DrawHandPage(),
+      home: const FlutterMapPackagePage(),
     );
   }
 }
