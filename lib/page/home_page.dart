@@ -1,35 +1,36 @@
 import 'dart:async';
-import 'dart:collection';
 import 'dart:io';
 import 'dart:math';
 import 'dart:developer' as dev;
 import 'package:flutter/material.dart';
-import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:flutter_map/flutter_map.dart';
+import 'package:latlong2/latlong.dart';
 import 'package:logger/logger.dart';
 
-class DrawHandPage extends StatefulWidget {
-  const DrawHandPage({Key? key}) : super(key: key);
+class HomePage extends StatefulWidget {
+  const HomePage({Key? key}) : super(key: key);
 
   @override
-  State<DrawHandPage> createState() => _DrawHandPageState();
+  State<HomePage> createState() => _HomePageState();
 }
 
-class _DrawHandPageState extends State<DrawHandPage> {
-  static final Completer<GoogleMapController> _controller = Completer();
-
-  static const CameraPosition _kGooglePlex = CameraPosition(
-    target: LatLng(41.311081, 69.240562),
-    zoom: 14.4746,
-  );
-
-  final Set<Polygon> _polygons = HashSet<Polygon>();
-  final Set<Polyline> _polyLines = HashSet<Polyline>();
-
+class _HomePageState extends State<HomePage> {
+  late MapController _controller;
+  Completer<MapController> mapController = Completer();
   bool _drawPolygonEnabled = false;
   final List<LatLng> _userPolyLinesLatLngList = [];
   bool _clearDrawing = false;
   int? _lastXCoordinate;
   int? _lastYCoordinate;
+  List<Polygon> polygons = const [];
+  List<Polyline> polyLines = const [];
+
+
+  @override
+  void initState() {
+    _controller = MapController();
+    super.initState();
+  }
 
 
   @override
@@ -38,15 +39,28 @@ class _DrawHandPageState extends State<DrawHandPage> {
       body: GestureDetector(
         onPanUpdate: (_drawPolygonEnabled) ? _onPanUpdate : null,
         onPanEnd: (_drawPolygonEnabled) ? _onPanEnd : null,
-        child: GoogleMap(
-          mapType: MapType.normal,
-          initialCameraPosition: _kGooglePlex,
-          polygons: _polygons,
-          polylines: _polyLines,
-          onMapCreated: (GoogleMapController controller) {
-            _controller.complete(controller);
-          },
-        ),
+        child: FlutterMap(
+          //mapController: _controller,
+          options: MapOptions(
+            center: const LatLng(41.311081, 69.240562),
+            zoom: 9.2,
+          ),
+          children: [
+            TileLayer(
+              minZoom: 1,
+              maxZoom: 18,
+              backgroundColor: Colors.white,
+              urlTemplate: 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
+              subdomains: const ['a', 'b', 'c'],
+            ),
+            PolylineLayer(
+              polylines:polyLines,
+            ),
+            PolygonLayer(
+              polygons: polygons,
+            ),
+          ],
+        )
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: _toggleDrawing,
@@ -62,6 +76,7 @@ class _DrawHandPageState extends State<DrawHandPage> {
   }
 
   _onPanUpdate(DragUpdateDetails details) async {
+
     if (_clearDrawing) {
       _clearDrawing = false;
       _clearPolygons();
@@ -71,8 +86,8 @@ class _DrawHandPageState extends State<DrawHandPage> {
       double? x;
       double? y;
       if (Platform.isAndroid) {
-        x = details.globalPosition.dx * 2.5;
-        y = details.globalPosition.dy * 2.5;
+        x = details.globalPosition.dx * 2;
+        y = details.globalPosition.dy * 2;
       } else if (Platform.isIOS) {
         x = details.globalPosition.dx;
         y = details.globalPosition.dy;
@@ -88,19 +103,16 @@ class _DrawHandPageState extends State<DrawHandPage> {
       _lastXCoordinate = xCoordinate;
       _lastYCoordinate = yCoordinate;
 
-      ScreenCoordinate screenCoordinate = ScreenCoordinate(x: xCoordinate!, y: yCoordinate!);
+      CustomPoint<int> screenCoordinate = CustomPoint(xCoordinate!,yCoordinate!);
 
-      final GoogleMapController controller = await _controller.future;
-      LatLng latLng = await controller.getLatLng(screenCoordinate);
+      LatLng latLng = _controller.pointToLatLng(screenCoordinate);
+
       try {
         _userPolyLinesLatLngList.add(latLng);
 
-        _polyLines.removeWhere((polyline) => polyline.polylineId.value == 'user_polyline');
-        _polyLines.add(
+        polyLines.add(
           Polyline(
-            polylineId: const PolylineId('user_polyline'),
             points: _userPolyLinesLatLngList,
-            width: 2,
             color: Colors.blue,
           ),
         );
@@ -116,14 +128,10 @@ class _DrawHandPageState extends State<DrawHandPage> {
     _lastYCoordinate = null;
 
     if (_drawPolygonEnabled) {
-      _polygons.removeWhere((polygon) => polygon.polygonId.value == 'user_polygon');
-      _polygons.add(
+      polygons.add(
         Polygon(
-          polygonId: const PolygonId('user_polygon'),
+          color: Colors.blue,
           points: _userPolyLinesLatLngList,
-          strokeWidth: 2,
-          strokeColor: Colors.blue,
-          fillColor: Colors.blue.withOpacity(0.4),
         ),
       );
       setState(() {
@@ -136,8 +144,8 @@ class _DrawHandPageState extends State<DrawHandPage> {
   //changed
   _clearPolygons() {
     setState(() {
-      _polyLines.clear();
-      _polygons.clear();
+      //polyLines.clear();
+      //polygons.clear();
       _userPolyLinesLatLngList.clear();
     });
   }

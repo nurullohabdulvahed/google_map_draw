@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:google_map_training/page/open_street_map.dart';
-import 'package:google_map_training/page/street_map.dart';
+import 'package:google_map_training/page/tupac.dart';
 
 
 void main() {
@@ -17,7 +16,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: const FlutterMapPackagePage(),
+      home:  const HomePage(),
     );
   }
 }

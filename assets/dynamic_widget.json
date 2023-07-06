@@ -1,0 +1,220 @@
+ {
+  "main_type": 1,
+  "sub_type": 13,
+  "tabs": [
+    {
+      "tab": 1,
+      "tab_name": "name1",
+      "form": [
+        {
+          "item_type": "block",
+          "item": {
+            "title": "Photo",
+            "vertical": null,
+            "inputs": [
+              {
+                "label": null,
+                "tooltip": null,
+                "value": null,
+                "type": "image_download_button",
+                "list": [],
+                "validation": null,
+                "pattern": null,
+                "placeholder": "Maximum 10 photos. The first photo will be on the cover of the ad",
+                "width_percentage": null,
+                "required": true
+              }
+            ]
+          }
+        },
+        {
+          "item_type": "field",
+          "item": {
+            "label": "Floor",
+            "tooltip": "apartment floor",
+            "type": "text_field",
+            "list": [],
+            "validation": "number",
+            "pattern": "some pattern",
+            "placeholder": "Enter the floor",
+            "width_percentage": 25,
+            "required": true,
+            "value": false
+          }
+        },
+        {
+          "item_type": "block",
+          "item": {
+            "title": "Price",
+            "vertical": null,
+            "inputs": [
+              {
+                "label": null,
+                "tooltip": null,
+                "value": null,
+                "type": "text_field",
+                "list": [],
+                "validation": null,
+                "pattern": null,
+                "placeholder": "Enter the price",
+                "width_percentage": 70,
+                "required": true
+              },
+              {
+                "label": null,
+                "tooltip": null,
+                "value": null,
+                "type": "drop_down",
+                "list": [
+                  "USD",
+                  "SUM"
+                ],
+                "validation": null,
+                "pattern": null,
+                "placeholder": "Select a currency",
+                "width_percentage": 30,
+                "required": true
+              }
+            ]
+          }
+        },
+        {
+          "item_type": "block",
+          "item": {
+            "title": "Inventory",
+            "vertical": null,
+            "inputs": [
+              {
+                "label": null,
+                "tooltip": null,
+                "value": null,
+                "type": "container",
+                "list": [],
+                "validation": null,
+                "pattern": null,
+                "placeholder": "Select file",
+                "width_percentage": 70,
+                "required": true
+              },
+              {
+                "label": null,
+                "tooltip": null,
+                "value": null,
+                "type": "file_download_button",
+                "list": [],
+                "validation": null,
+                "pattern": null,
+                "placeholder": null,
+                "width_percentage": 30,
+                "required": true
+              }
+            ]
+          }
+        },
+        {
+          "item_type": "field",
+          "item": {
+            "label": "Bargaining possible",
+            "tooltip": null,
+            "type": "switch",
+            "list": [],
+            "validation": null,
+            "pattern": null,
+            "placeholder": null,
+            "value": false,
+            "width_percentage": null,
+            "required": true
+          }
+        },
+        {
+          "item_type": "block",
+          "item": {
+            "title": "Other",
+            "vertical": true,
+            "inputs": [
+              {
+                "label": "Furniture",
+                "tooltip": null,
+                "value": false,
+                "type": "checkbox",
+                "list": [],
+                "validation": null,
+                "pattern": null,
+                "placeholder": null,
+                "width": null,
+                "required": true
+              },
+              {
+                "label": "Appliances",
+                "tooltip": null,
+                "value": false,
+                "type": "checkbox",
+                "list": [],
+                "validation": null,
+                "pattern": null,
+                "placeholder": null,
+                "width": null,
+                "required": true
+              }
+            ]
+          }
+        },
+        {
+          "item_type": "block",
+          "item": {
+            "label": "Repair",
+            "tooltip": null,
+            "type": "multi_select_drop_down",
+            "list": [
+              "current",
+              "capital"
+            ],
+            "validation":null,
+            "pattern": null,
+            "placeholder": "Select the type of repair",
+            "width_percentage": 100,
+            "required": true
+          }
+        },
+        {
+          "item_type": "block",
+          "item": {
+            "label": "Bathroom",
+            "tooltip": null,
+            "type": "single_select_drop_down",
+            "list": [
+              "separate",
+              "joint"
+            ],
+            "validation":null,
+            "pattern": null,
+            "placeholder": "Select the types of bathrooms",
+            "width_percentage": 100,
+            "required": true
+          }
+        }
+      ]
+    },
+    {
+      "tab": 2,
+      "tab_name": "name2",
+      "form": [
+
+      ]
+    },
+    {
+      "tab": 3,
+      "tab_name": "name3",
+      "form": [
+
+      ]
+    },
+    {
+      "tab": 4,
+      "tab_name": "name4",
+      "form": [
+
+      ]
+    }
+  ]
+}
